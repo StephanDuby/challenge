@@ -1,0 +1,29 @@
+{
+    "presets": [
+        "@babel/preset-react",
+        [
+            "@babel/preset-env",
+            {
+                "useBuiltIns": "usage"
+            }
+        ]
+    ],
+    "plugins": [
+        "react-hot-loader/babel",
+        "react-html-attrs",
+        "@babel/plugin-transform-object-assign",
+        "@babel/plugin-proposal-object-rest-spread",
+        [
+            "@babel/plugin-transform-flow-strip-types",
+            {
+                "requireDirective": true
+            }
+        ],
+        [
+            "@babel/plugin-proposal-class-properties",
+            {
+                "loose": true
+            }
+        ]
+    ]
+}
