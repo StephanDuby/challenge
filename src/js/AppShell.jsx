@@ -1,8 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
-import { AppNavigation } from './Navigation/Navigation';
-import { Header, Logo } from '@liquid-design/liquid-design-react';
+import { Navigation } from './Navigation/Navigation';
 
 const ShellContainer = styled.div`
     position: fixed;
@@ -15,16 +14,9 @@ const ShellContainer = styled.div`
     flex-direction: row;
 `;
 
-const NavigationContainer = styled.div`
-    width: 80px;
-    height: 100%;
-    flex: 0;
-`;
-
 const ContentContainer = styled.div`
-    height: 100%;
-    background: #0f0;
-    flex: 1;
+    position: relative;
+    flex: 1 1;
 `;
 
 export class AppShell extends React.Component {
@@ -36,10 +28,7 @@ export class AppShell extends React.Component {
     render() {
         return (
             <ShellContainer>
-                <NavigationContainer>
-                    <Header logoComponent={<Logo />} />
-                    <AppNavigation />
-                </NavigationContainer>
+                <Navigation />
                 <ContentContainer>{this.props.children}</ContentContainer>
             </ShellContainer>
         );

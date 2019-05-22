@@ -1,8 +1,11 @@
 import React from 'react';
-import { Theme } from '@liquid-design/liquid-design-react';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './theme/theme';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ROUTES } from './routes/routes';
 import { AppShell } from './AppShell';
+import { FontImport } from './components/elements/FontImport';
+import { GlobalStyles } from './GlobalStyles';
 import { Home } from './routes/Home/Home';
 import { Statistics } from './routes/Statistics/Statistics';
 
@@ -10,9 +13,11 @@ export default class Application extends React.Component {
 
     render() {
         return (
-            <Theme>
-                <BrowserRouter>
+            <BrowserRouter>
+                <ThemeProvider theme={theme}>
                     <AppShell>
+                        <FontImport />
+                        <GlobalStyles />
                         <Switch>
                             <Route exact path={ROUTES.root} component={Home} />
                             <Route
@@ -22,8 +27,8 @@ export default class Application extends React.Component {
                             />
                         </Switch>
                     </AppShell>
-                </BrowserRouter>
-            </Theme>
+                </ThemeProvider>
+            </BrowserRouter>
         );
     }
 
