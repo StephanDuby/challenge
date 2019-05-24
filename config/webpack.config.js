@@ -1,6 +1,6 @@
 var path = require('path');
 var HtmlWebPackPlugin = require('html-webpack-plugin');
-// var CopyWebpackPlugin = require("copy-webpack-plugin");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const PATHS = require('./paths');
 
@@ -9,9 +9,9 @@ const htmlPlugin = new HtmlWebPackPlugin({
     filename: './index.html'
 });
 
-/* const copyPlugin = new CopyWebpackPlugin([
-    { from: 'assets' }
-]);*/
+const copyPlugin = new CopyWebpackPlugin([
+    { from: 'src/assets' }
+]);
 
 module.exports = {
     entry: {
@@ -53,5 +53,5 @@ module.exports = {
     devServer: {
         historyApiFallback: true
     },
-    plugins: [htmlPlugin]
+    plugins: [htmlPlugin, copyPlugin]
 };

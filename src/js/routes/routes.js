@@ -1,4 +1,5 @@
 export const ROUTES = {
-    root: '/',
+    home: '/',
+    tracker: '/tracker',
     stats: '/statistics'
 };

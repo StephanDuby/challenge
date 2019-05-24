@@ -5,5 +5,6 @@ export const navigation = {
     iconColor: GRAY_1,
     iconActiveColor: PRIMARY,
     iconSize: '32px',
-    labelSize: '12px'
+    labelSize: '12px',
+    hamburgerColor: WHITE
 };

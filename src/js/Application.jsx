@@ -1,34 +1,47 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme/theme';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { messages } from './i18n/de';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { IntlProvider } from 'react-intl';
 import { ROUTES } from './routes/routes';
 import { AppShell } from './AppShell';
 import { FontImport } from './components/elements/FontImport';
 import { GlobalStyles } from './GlobalStyles';
-import { Home } from './routes/Home/Home';
+import { Tracker } from './routes/Tracker/Tracker';
 import { Statistics } from './routes/Statistics/Statistics';
 
 export default class Application extends React.Component {
 
     render() {
         return (
-            <BrowserRouter>
-                <ThemeProvider theme={theme}>
-                    <AppShell>
-                        <FontImport />
-                        <GlobalStyles />
-                        <Switch>
-                            <Route exact path={ROUTES.root} component={Home} />
-                            <Route
-                                exact
-                                path={ROUTES.stats}
-                                component={Statistics}
-                            />
-                        </Switch>
-                    </AppShell>
-                </ThemeProvider>
-            </BrowserRouter>
+            <IntlProvider locale={'de'} messages={messages}>
+                <BrowserRouter>
+                    <ThemeProvider theme={theme}>
+                        <AppShell>
+                            <FontImport />
+                            <GlobalStyles />
+                            <Switch>
+                                <Redirect
+                                    exact
+                                    from={ROUTES.home}
+                                    to={ROUTES.tracker}
+                                />
+                                <Route
+                                    exact
+                                    path={ROUTES.tracker}
+                                    component={Tracker}
+                                />
+                                <Route
+                                    exact
+                                    path={ROUTES.stats}
+                                    component={Statistics}
+                                />
+                            </Switch>
+                        </AppShell>
+                    </ThemeProvider>
+                </BrowserRouter>
+            </IntlProvider>
         );
     }
 
