@@ -19,16 +19,28 @@ const getDistinctValues = (data, property) => {
 };
 
 export const calulateSegmentPath = parameters => {
-    const { radiusL, radiusS, startAngle, endAngle } = parameters;
+    const { radiusL, radiusS, startAngle, endAngle, positioningFactor } = parameters;
     const sinAlpha = Math.sin(startAngle);
     const cosAlpha = Math.cos(startAngle);
     const sinBeta = Math.sin(endAngle);
     const cosBeta = Math.cos(endAngle);
 
-    const pointA = { x: radiusL + radiusL * sinAlpha, y: radiusL - radiusL * cosAlpha };
-    const pointB = { x: radiusL + radiusL * sinBeta, y: radiusL - radiusL * cosBeta };
-    const pointC = { x: radiusL + radiusS * sinBeta, y: radiusL - radiusS * cosBeta };
-    const pointD = { x: radiusL + radiusS * sinAlpha, y: radiusL - radiusS * cosAlpha };
+    const pointA = {
+        x: positioningFactor + radiusL + radiusL * sinAlpha,
+        y: positioningFactor + radiusL - radiusL * cosAlpha
+    };
+    const pointB = {
+        x: positioningFactor + radiusL + radiusL * sinBeta,
+        y: positioningFactor + radiusL - radiusL * cosBeta
+    };
+    const pointC = {
+        x: positioningFactor + radiusL + radiusS * sinBeta,
+        y: positioningFactor + radiusL - radiusS * cosBeta
+    };
+    const pointD = {
+        x: positioningFactor + radiusL + radiusS * sinAlpha,
+        y: positioningFactor + radiusL - radiusS * cosAlpha
+    };
 
     const largeArc = endAngle - startAngle > Math.PI;
 
@@ -40,7 +52,7 @@ export const calulateSegmentPath = parameters => {
 };
 
 export const calculateEndChunkPath = parameters => {
-    const { radiusL, radiusS, startAngle, barThickness, angleFactor } = parameters;
+    const { radiusL, radiusS, startAngle, barThickness, angleFactor, positioningFactor } = parameters;
     const chunkStartAngle = startAngle - angleFactor;
     const chunkEndAngle = startAngle;
     const chunkExtraEndAngle = startAngle + 0.1;
@@ -50,10 +62,22 @@ export const calculateEndChunkPath = parameters => {
     const cosBeta = Math.cos(chunkEndAngle);
     const sinGamma = Math.sin(chunkExtraEndAngle);
     const cosGamma = Math.cos(chunkExtraEndAngle);
-    const pointA = { x: radiusL + radiusL * sinAlpha, y: radiusL - radiusL * cosAlpha };
-    const pointB = { x: radiusL + radiusL * sinGamma, y: radiusL - radiusL * cosGamma };
-    const pointC = { x: radiusL + radiusS * sinGamma, y: radiusL - radiusS * cosGamma };
-    const pointD = { x: radiusL + radiusS * sinBeta, y: radiusL - radiusS * cosBeta };
+    const pointA = {
+        x: positioningFactor + radiusL + radiusL * sinAlpha,
+        y: positioningFactor + radiusL - radiusL * cosAlpha
+    };
+    const pointB = {
+        x: positioningFactor + radiusL + radiusL * sinGamma,
+        y: positioningFactor + radiusL - radiusL * cosGamma
+    };
+    const pointC = {
+        x: positioningFactor + radiusL + radiusS * sinGamma,
+        y: positioningFactor + radiusL - radiusS * cosGamma
+    };
+    const pointD = {
+        x: positioningFactor + radiusL + radiusS * sinBeta,
+        y: positioningFactor + radiusL - radiusS * cosBeta
+    };
 
     const largeArc = chunkEndAngle - chunkStartAngle > Math.PI;
 
@@ -66,7 +90,7 @@ export const calculateEndChunkPath = parameters => {
 };
 
 export const calculateStartChunkPath = parameters => {
-    const { radiusL, radiusS, endAngle, barThickness, angleFactor } = parameters;
+    const { radiusL, radiusS, endAngle, barThickness, angleFactor, positioningFactor } = parameters;
     const chunkStartAngle = endAngle + angleFactor;
     const chunkEndAngle = endAngle;
     const chunkExtraEndAngle = endAngle - 0.1;
@@ -76,10 +100,22 @@ export const calculateStartChunkPath = parameters => {
     const cosBeta = Math.cos(chunkEndAngle);
     const sinGamma = Math.sin(chunkExtraEndAngle);
     const cosGamma = Math.cos(chunkExtraEndAngle);
-    const pointA = { x: radiusL + radiusL * sinAlpha, y: radiusL - radiusL * cosAlpha };
-    const pointB = { x: radiusL + radiusL * sinGamma, y: radiusL - radiusL * cosGamma };
-    const pointC = { x: radiusL + radiusS * sinGamma, y: radiusL - radiusS * cosGamma };
-    const pointD = { x: radiusL + radiusS * sinBeta, y: radiusL - radiusS * cosBeta };
+    const pointA = {
+        x: positioningFactor + radiusL + radiusL * sinAlpha,
+        y: positioningFactor + radiusL - radiusL * cosAlpha
+    };
+    const pointB = {
+        x: positioningFactor + radiusL + radiusL * sinGamma,
+        y: positioningFactor + radiusL - radiusL * cosGamma
+    };
+    const pointC = {
+        x: positioningFactor + radiusL + radiusS * sinGamma,
+        y: positioningFactor + radiusL - radiusS * cosGamma
+    };
+    const pointD = {
+        x: positioningFactor + radiusL + radiusS * sinBeta,
+        y: positioningFactor + radiusL - radiusS * cosBeta
+    };
 
     const largeArc = chunkEndAngle - chunkStartAngle > Math.PI;
 
@@ -92,7 +128,7 @@ export const calculateStartChunkPath = parameters => {
 };
 
 export const calculateActiveSegmentPath = parameters => {
-    const { radiusL, radiusS, startAngle, endAngle, angleFactor, barThickness } = parameters;
+    const { radiusL, radiusS, startAngle, endAngle, angleFactor, barThickness, positioningFactor } = parameters;
     const outerStartAngle = startAngle - angleFactor;
     const innerEndAngle = endAngle - angleFactor;
     const sinAlpha = Math.sin(outerStartAngle);
@@ -104,10 +140,22 @@ export const calculateActiveSegmentPath = parameters => {
     const sinDelta = Math.sin(innerEndAngle);
     const cosDelta = Math.cos(innerEndAngle);
 
-    const pointA = { x: radiusL + radiusL * sinAlpha, y: radiusL - radiusL * cosAlpha };
-    const pointB = { x: radiusL + radiusL * sinBeta, y: radiusL - radiusL * cosBeta };
-    const pointC = { x: radiusL + radiusS * sinDelta, y: radiusL - radiusS * cosDelta };
-    const pointD = { x: radiusL + radiusS * sinGamma, y: radiusL - radiusS * cosGamma };
+    const pointA = {
+        x: positioningFactor + radiusL + radiusL * sinAlpha,
+        y: positioningFactor + radiusL - radiusL * cosAlpha
+    };
+    const pointB = {
+        x: positioningFactor + radiusL + radiusL * sinBeta,
+        y: positioningFactor + radiusL - radiusL * cosBeta
+    };
+    const pointC = {
+        x: positioningFactor + radiusL + radiusS * sinDelta,
+        y: positioningFactor + radiusL - radiusS * cosDelta
+    };
+    const pointD = {
+        x: positioningFactor + radiusL + radiusS * sinGamma,
+        y: positioningFactor + radiusL - radiusS * cosGamma
+    };
 
     const largeArc = endAngle - startAngle > Math.PI;
 
@@ -120,4 +168,17 @@ export const calculateActiveSegmentPath = parameters => {
     } A ${barThickness} ${barThickness} 0 ${largeArc ? '1,1' : '0,1'} ${pointA.x} ${pointA.y}`;
 
     return path;
+};
+
+export const calculateButtonPositionOnActiveSegment = parameters => {
+    const { radiusL, startAngle, endAngle, positioningFactor, angleFactor } = parameters;
+    const actualStartAngle = startAngle - angleFactor;
+    const positionAngle = actualStartAngle + (endAngle - actualStartAngle) / 2;
+    const sinAlpha = Math.sin(positionAngle);
+    const cosAlpha = Math.cos(positionAngle);
+    const pointA = {
+        x: positioningFactor + radiusL + radiusL * sinAlpha,
+        y: positioningFactor + radiusL - radiusL * cosAlpha
+    };
+    return pointA;
 };
