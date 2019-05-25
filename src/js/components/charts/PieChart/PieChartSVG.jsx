@@ -1,6 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const CHART_BASE = 320;
 export const CHART_PADDING = 30;
@@ -16,6 +16,19 @@ const PieSegment = styled.path`
     cursor: pointer;
 `;
 
+const blendIn = keyframes`
+    0% {
+        fill-opacity: 0.5;
+    }
+    100%: {
+        top: 1;
+    }
+`;
+
+const AnimatedSegment = styled(PieSegment)`
+    animation: ${blendIn} 0.3s ease-in-out;
+`;
+
 const CircleMask = styled.circle`
     pointer-events: none;
 `;
@@ -28,6 +41,18 @@ const ActiveSegmentButtonPath = styled.path`
     pointer-events: none;
 `;
 
+const slideUp = keyframes`
+    0% {
+        top: 55%;
+    }
+    90% {
+        top: 49%;
+    }
+    100%: {
+        top: 50%;
+    }
+`;
+
 const ChartText = styled.div`
     width: ${CHART_HEIGHT - 3 * CHART_PADDING + MEASURE_UNIT};
     position: absolute;
@@ -38,6 +63,7 @@ const ChartText = styled.div`
     right: 0;
     text-align: center;
     color: '#F00';
+    animation: ${slideUp} 0.3s ease-in-out;
 `;
 
 const ChartTextSpan = styled.div`
@@ -59,7 +85,6 @@ export const PieChartSVG = ({
     activeData,
     activeSegment,
     activeSegmentButton,
-    pieChartData,
     onClickSegment,
     onCloseActiveSegment
 }) => {
@@ -96,7 +121,7 @@ export const PieChartSVG = ({
                 {activeSegment && (
                     <>
                         <CircleMask cx={CENTER} cy={CENTER} r={RADIUS} fill={'rgba(255, 255, 255, 0.6)'} />
-                        <PieSegment fill={activeSegment.color} d={activeSegment.path} />
+                        <AnimatedSegment key={activeSegment.color} fill={activeSegment.color} d={activeSegment.path} />
                         <ActiveSegmentButton
                             cx={activeSegmentButton.position.x}
                             cy={activeSegmentButton.position.y}
@@ -125,23 +150,22 @@ export const PieChartSVG = ({
                     </>
                 )}
             </svg>
-            <ChartText>
-                {!activeData ? (
-                    'Choose a section for further details'
-                ) : (
+            {!activeData ? (
+                <ChartText key={'inactive'}>Choose a section for further details</ChartText>
+            ) : (
+                <ChartText key={activeData.defect}>
                     <div>
                         <ChartTextSpan>{activeData.defect}</ChartTextSpan>
                         <ChartTextSpecial>{activeData.percentage} %</ChartTextSpecial>
                         <ChartTextSpan>({activeData.count} defects)</ChartTextSpan>
                     </div>
-                )}
-            </ChartText>
+                </ChartText>
+            )}
         </>
     );
 };
 
 PieChartSVG.propTypes = {
-    pieChartData: propTypes.object,
     activeData: propTypes.object,
     chartSegments: propTypes.object,
     activeSegment: propTypes.object,

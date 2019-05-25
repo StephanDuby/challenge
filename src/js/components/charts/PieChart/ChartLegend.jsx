@@ -65,14 +65,16 @@ const ColorSwatch = styled.div`
 export const ChartLegend = ({ pieChartData, activeDataIndex }) => (
     <>
         <LegendHeader>
-            <LegendHeaderNumber>{pieChartData.total}</LegendHeaderNumber> defects detected
+            <LegendHeaderNumber>
+                {activeDataIndex != null ? pieChartData.aggregatedDefects[activeDataIndex].count : pieChartData.total}
+            </LegendHeaderNumber>{' '}
+            defects detected
         </LegendHeader>
         <DefectList>
             {pieChartData.aggregatedDefects.map((item, index) => (
                 <DefectItem key={item.defect} inactive={activeDataIndex != null && activeDataIndex !== index}>
                     <ColorSwatch color={item.color} inactive={activeDataIndex != null && activeDataIndex !== index} />
                     {item.defect}
-                    {item.count}
                 </DefectItem>
             ))}
         </DefectList>

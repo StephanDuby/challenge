@@ -1,27 +1,31 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-console.log('faChevronDown', faChevronDown);
+const HEIGHT = 34;
+const UNIT = 'px';
 
-const StyledSelect = styled.select`
-    border: none;
+const SelectContainer = styled.div`
+    display: inline-block;
     border-radius: 6px;
     background: ${props => props.theme.select.background};
-    appearance: none;
-    height: 34px;
-    padding: 5px 32px 5px 12px;
+    height: ${HEIGHT + UNIT};
+    cursor: pointer;
+    position: relative;
+`;
 
-    &:before {
-        content: '${faChevronDown.icon[4]}';
-        font-family: FontAwesome;
-        position: absolute;
-        right: 12px;
-        top: 0;
-        height: 34px;
-        line-height: 34px;
-        display: block;
+const StyledSelect = styled.select`
+    width: 100%;
+    border: none;
+    background: transparent;
+    appearance: none;
+    height: ${HEIGHT + UNIT};
+    padding:  0 40px 0 ${props => props.theme.defaultPadding};
+    
+    &::-ms-expand {
+        display; none;
     }
 
     &:focus {
@@ -29,14 +33,26 @@ const StyledSelect = styled.select`
     }
 `;
 
-export const Select = ({ options }) => (
-    <StyledSelect>
-        {options.map(item => (
-            <option key={item} value={item}>
-                {item}
-            </option>
-        ))}
-    </StyledSelect>
+const StyledIcon = styled(FontAwesomeIcon)`
+    position: absolute;
+    line-height: ${HEIGHT + 10 + UNIT};
+    right: 15px;
+    top: 11px;
+    color: ${props => props.theme.brandPrimaryColor};
+    pointer-events: none;
+`;
+
+export const Select = ({ options, ...props }) => (
+    <SelectContainer {...props}>
+        <StyledIcon icon={faChevronDown} />
+        <StyledSelect>
+            {options.map(item => (
+                <option key={item} value={item}>
+                    {item}
+                </option>
+            ))}
+        </StyledSelect>
+    </SelectContainer>
 );
 
 Select.propTypes = {

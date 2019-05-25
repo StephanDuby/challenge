@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { device } from '../../../helpers/viewportSizes';
 import {
@@ -13,14 +14,12 @@ import {
 } from './PieChartSVG';
 import { ChartLegend } from './ChartLegend';
 import {
-    aggregateData,
     calulateSegmentPath,
     calculateStartChunkPath,
     calculateEndChunkPath,
     calculateActiveSegmentPath,
     calculateButtonPositionOnActiveSegment
-} from './dataHelper';
-import { data } from '../../../mock/pieChartData';
+} from '../../../helpers/dataHelper';
 
 const ChartContainer = styled.div`
     width: 100%;
@@ -46,9 +45,6 @@ const LegendContainer = styled.div`
     padding: ${CHART_PADDING + MEASURE_UNIT};
 `;
 
-// generate chart data from raw data
-const pieChartData = aggregateData(data.defects, 'defect');
-
 export class PieChart extends React.Component {
 
     state = {
@@ -70,6 +66,7 @@ export class PieChart extends React.Component {
 
     render() {
         const { activeDataIndex } = this.state;
+        const { pieChartData } = this.props;
         let startAngle = 0;
 
         const chartSegments = {
@@ -140,3 +137,7 @@ export class PieChart extends React.Component {
     }
 
 }
+
+PieChart.propTypes = {
+    pieChartData: propTypes.object
+};

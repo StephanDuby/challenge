@@ -235,17 +235,7 @@ export const data = {
     ]
 };
 
-export const optionsFilterA = [
-    'january',
-    'february',
-    'march',
-    'april',
-    'may',
-    'june',
-    'july',
-    'august',
-    'september',
-    'october',
-    'november',
-    'december'
-];
+export const optionsFilterA = ['Current month', 'Year to date', 'Quarter to date'];
+export const optionsFilterB = ['All Dosages', 'No idea', 'Business specific i guess'];
+export const optionsFilterC = ['All stamps', 'One stamp Only', 'Another stamp'];
+export const optionsFilterD = ['All batches', 'One batch Only', 'Another batch'];

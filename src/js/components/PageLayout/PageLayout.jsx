@@ -7,7 +7,6 @@ export const PageContainer = styled.div`
 `;
 
 export const PageHeader = styled.div`
-    height: 40px;
     width: 100%;
     margin-bottom: ${props => props.theme.defaultMargin};
 `;

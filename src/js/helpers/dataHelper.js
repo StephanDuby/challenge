@@ -1,4 +1,4 @@
-import { theme } from '../../../theme/theme';
+import { theme } from '../theme/theme';
 
 export const aggregateData = (data, property) => {
     const total = data.length;
