@@ -55,6 +55,7 @@ const ContentContainer = styled.div`
     background: ${props => props.theme.contentBG};
     height: 100%;
     width: 100%;
+    overflow: auto;
 
     @media ${device.medium} {
         position: static;
@@ -82,10 +83,7 @@ export class AppShell extends React.Component {
         return (
             <>
                 <MobileHeader>
-                    <MobileHamburger
-                        onClick={this.handleMobileMenuToggle}
-                        menuOpen={this.state.menuOpen}
-                    />
+                    <MobileHamburger onClick={this.handleMobileMenuToggle} menuOpen={this.state.menuOpen} />
                     <MobileLogoContainer>
                         <MobileLogo src={'/svg/Logo.svg'} />
                     </MobileLogoContainer>

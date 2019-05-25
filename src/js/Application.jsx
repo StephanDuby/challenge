@@ -6,7 +6,6 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import { ROUTES } from './routes/routes';
 import { AppShell } from './AppShell';
-import { FontImport } from './components/elements/FontImport';
 import { GlobalStyles } from './GlobalStyles';
 import { Tracker } from './routes/Tracker/Tracker';
 import { Statistics } from './routes/Statistics/Statistics';
@@ -19,24 +18,11 @@ export default class Application extends React.Component {
                 <BrowserRouter>
                     <ThemeProvider theme={theme}>
                         <AppShell>
-                            <FontImport />
                             <GlobalStyles />
                             <Switch>
-                                <Redirect
-                                    exact
-                                    from={ROUTES.home}
-                                    to={ROUTES.tracker}
-                                />
-                                <Route
-                                    exact
-                                    path={ROUTES.tracker}
-                                    component={Tracker}
-                                />
-                                <Route
-                                    exact
-                                    path={ROUTES.stats}
-                                    component={Statistics}
-                                />
+                                <Redirect exact from={ROUTES.home} to={ROUTES.tracker} />
+                                <Route exact path={ROUTES.tracker} component={Tracker} />
+                                <Route exact path={ROUTES.stats} component={Statistics} />
                             </Switch>
                         </AppShell>
                     </ThemeProvider>

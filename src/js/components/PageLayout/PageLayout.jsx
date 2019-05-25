@@ -7,12 +7,11 @@ export const PageContainer = styled.div`
 `;
 
 export const PageHeader = styled.div`
-    height: 60px;
+    height: 40px;
     width: 100%;
     margin-bottom: ${props => props.theme.defaultMargin};
 `;
 
 export const PageBody = styled.div`
     width: 100%;
-    margin-bottom: ${props => props.theme.defaultMargin};
 `;

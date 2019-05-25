@@ -4,10 +4,12 @@ export const aggregateData = (data, property) => {
     const total = data.length;
     const possibleDefects = getDistinctValues(data, property);
     const aggregatedDefects = possibleDefects.map((defect, index) => {
+        const count = data.filter(item => item[property] === defect).length;
         return {
             defect,
-            count: data.filter(item => item[property] === defect).length,
-            color: theme.charts.colors[index]
+            count,
+            color: theme.charts.colors[index],
+            percentage: Math.round(((count * 100) / total) * 10) / 10
         };
     });
 
@@ -51,7 +53,7 @@ export const calulateSegmentPath = parameters => {
     return path;
 };
 
-export const calculateEndChunkPath = parameters => {
+export const calculateStartChunkPath = parameters => {
     const { radiusL, radiusS, startAngle, barThickness, angleFactor, positioningFactor } = parameters;
     const chunkStartAngle = startAngle - angleFactor;
     const chunkEndAngle = startAngle;
@@ -89,7 +91,7 @@ export const calculateEndChunkPath = parameters => {
     return path;
 };
 
-export const calculateStartChunkPath = parameters => {
+export const calculateEndChunkPath = parameters => {
     const { radiusL, radiusS, endAngle, barThickness, angleFactor, positioningFactor } = parameters;
     const chunkStartAngle = endAngle + angleFactor;
     const chunkEndAngle = endAngle;
@@ -129,16 +131,16 @@ export const calculateStartChunkPath = parameters => {
 
 export const calculateActiveSegmentPath = parameters => {
     const { radiusL, radiusS, startAngle, endAngle, angleFactor, barThickness, positioningFactor } = parameters;
-    const outerStartAngle = startAngle - angleFactor;
-    const innerEndAngle = endAngle - angleFactor;
-    const sinAlpha = Math.sin(outerStartAngle);
-    const cosAlpha = Math.cos(outerStartAngle);
-    const sinBeta = Math.sin(endAngle);
-    const cosBeta = Math.cos(endAngle);
-    const sinGamma = Math.sin(startAngle);
-    const cosGamma = Math.cos(startAngle);
-    const sinDelta = Math.sin(innerEndAngle);
-    const cosDelta = Math.cos(innerEndAngle);
+    const outerEndAngle = endAngle + angleFactor;
+    const innerStartAngle = startAngle + angleFactor;
+    const sinAlpha = Math.sin(startAngle);
+    const cosAlpha = Math.cos(startAngle);
+    const sinBeta = Math.sin(outerEndAngle);
+    const cosBeta = Math.cos(outerEndAngle);
+    const sinGamma = Math.sin(innerStartAngle);
+    const cosGamma = Math.cos(innerStartAngle);
+    const sinDelta = Math.sin(endAngle);
+    const cosDelta = Math.cos(endAngle);
 
     const pointA = {
         x: positioningFactor + radiusL + radiusL * sinAlpha,
@@ -172,7 +174,7 @@ export const calculateActiveSegmentPath = parameters => {
 
 export const calculateButtonPositionOnActiveSegment = parameters => {
     const { radiusL, startAngle, endAngle, positioningFactor, angleFactor } = parameters;
-    const actualStartAngle = startAngle - angleFactor;
+    const actualStartAngle = startAngle + angleFactor;
     const positionAngle = actualStartAngle + (endAngle - actualStartAngle) / 2;
     const sinAlpha = Math.sin(positionAngle);
     const cosAlpha = Math.cos(positionAngle);
