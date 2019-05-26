@@ -2,7 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { PageContainer, PageHeader, PageBody } from '../../components/PageLayout/PageLayout';
-import { Toggle } from '../../components/elements/Toggle/toggle';
+import { Toggle } from '../../components/elements/Toggle/Toggle';
 import { Select } from '../../components/elements/Select/Select';
 import { PieChart } from '../../components/charts/PieChart/PieChart';
 import { StatisticsTable } from './StatisticsTable';
