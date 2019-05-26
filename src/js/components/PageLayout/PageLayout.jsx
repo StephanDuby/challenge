@@ -15,4 +15,5 @@ export const PageHeader = styled.div`
 export const PageBody = styled.div`
     width: 100%;
     overflow: hidden;
+    position: relative;
 `;

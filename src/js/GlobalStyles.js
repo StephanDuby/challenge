@@ -15,8 +15,6 @@ const Styles = createGlobalStyle`
     width: 100%;
     height: 100%;
     line-height: 1.6;
-    padding: 0;
-    margin: 0;
   }
   
   body {
@@ -29,6 +27,8 @@ const Styles = createGlobalStyle`
     box-sizing: border-box;
     font-family: ${props => props.theme && props.theme.defaultFont};
     font-size: ${props => props.theme && props.theme.defaultFontSize};
+    margin: 0;
+    parring: 0;
   }
   
 `;

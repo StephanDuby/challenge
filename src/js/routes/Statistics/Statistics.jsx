@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PageContainer, PageHeader, PageBody } from '../../components/PageLayout/PageLayout';
+import { Toggle } from '../../components/elements/Toggle/toggle';
 import { Select } from '../../components/elements/Select/Select';
 import { PieChart } from '../../components/charts/PieChart/PieChart';
 import { StatisticsTable } from './StatisticsTable';
@@ -21,6 +22,7 @@ const Headline = styled.h1`
     font-family: ${props => props.theme.specialFont};
     color: ${props => props.theme.brandSecondaryColor};
     text-transform: uppercase;
+    margin-bottom: ${props => props.theme.defaultMargin};
 `;
 
 const MachineStatus = styled.div`
@@ -81,24 +83,45 @@ const pieChartData = aggregateData(data.defects, 'defect');
 const filterData = getFilterValuesFromData(data.defects);
 const tableData = prepareDataForTable(data.defects);
 
-export const Statistics = () => (
-    <PageContainer>
-        <StyledPageHeader>
-            <MachineStatus>
-                Machine <MachineStatusIndicator />
-                <MachineName>XB3421</MachineName>
-            </MachineStatus>
-            <FilterBar>
-                <FilterSelect options={filterData.monthFilterValues} />
-                <FilterSelect options={filterData.dosageFilterValues} />
-                <FilterSelect options={filterData.stampFilterValues} />
-                <FilterSelect options={filterData.batchFilterValues} />
-            </FilterBar>
-        </StyledPageHeader>
-        <PageBody>
-            <Headline>Defect Statistics</Headline>
-            <PieChart pieChartData={pieChartData} />
-            <StatisticsTable tableData={tableData} />
-        </PageBody>
-    </PageContainer>
-);
+const PIE_VIEW = 'pie';
+const BAR_VIEW = 'bar';
+
+export class Statistics extends React.Component {
+
+    state = {
+        toggleValue: PIE_VIEW
+    };
+
+    handleClickToggle = () => {
+        this.setState(state => ({
+            toggleValue: state.toggleValue === PIE_VIEW ? BAR_VIEW : PIE_VIEW
+        }));
+    };
+
+    render() {
+        const { toggleValue } = this.state;
+        return (
+            <PageContainer>
+                <StyledPageHeader>
+                    <MachineStatus>
+                        Machine <MachineStatusIndicator />
+                        <MachineName>XB3421</MachineName>
+                    </MachineStatus>
+                    <FilterBar>
+                        <FilterSelect options={filterData.monthFilterValues} />
+                        <FilterSelect options={filterData.dosageFilterValues} />
+                        <FilterSelect options={filterData.stampFilterValues} />
+                        <FilterSelect options={filterData.batchFilterValues} />
+                    </FilterBar>
+                </StyledPageHeader>
+                <PageBody>
+                    <Headline>Defect Statistics</Headline>
+                    <Toggle toggleValue={toggleValue === PIE_VIEW ? 0 : 1} onClickToggle={this.handleClickToggle} />
+                    <PieChart pieChartData={pieChartData} />
+                    <StatisticsTable tableData={tableData} />
+                </PageBody>
+            </PageContainer>
+        );
+    }
+
+}
