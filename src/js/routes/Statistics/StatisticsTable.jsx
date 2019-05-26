@@ -6,6 +6,9 @@ import { BasicTable, TableHead, TableRow, HeadCell, TableBody, Cell, StyledIcon 
 import { sortDataByColumn } from '../../helpers/dataHelper';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
+const ASC = 'asc';
+const DESC = 'desc';
+
 const TableContainer = styled.div`
     width: 100%;
     overflow-x: auto;
@@ -43,14 +46,25 @@ class StatisticsTableBase extends React.Component {
 
     state = {
         openRows: [],
-        tableData: this.props.tableData
+        tableData: this.props.tableData,
+        sortColumn: {
+            column: 'batch',
+            direction: 'asc'
+        }
     };
 
     handleSortTableByColumn = event => {
         const column = event.target.dataset.column;
-        const tableData = sortDataByColumn(this.props.tableData, column);
+        const currentSort = this.state.sortColumn;
+        const sortDirection = column === currentSort.column ? (currentSort.direction === ASC ? DESC : ASC) : ASC;
+        const tableData = sortDataByColumn(this.props.tableData, column, sortDirection);
+        const sortColumn = {
+            column,
+            direction: sortDirection
+        };
         this.setState({
-            tableData
+            tableData,
+            sortColumn
         });
     };
 
@@ -69,23 +83,47 @@ class StatisticsTableBase extends React.Component {
     };
 
     render() {
-        const { openRows, tableData } = this.state;
+        const { openRows, tableData, sortColumn } = this.state;
         const { intl } = this.props;
         return (
             <TableContainer>
                 <BasicTable>
                     <TableHead>
                         <TableRow>
-                            <HeadCell data-column={'batch'} onClick={this.handleSortTableByColumn}>
+                            <HeadCell
+                                data-column={'batch'}
+                                activeSort={sortColumn.column === 'batch'}
+                                order={sortColumn.column === 'batch' ? sortColumn.direction : ASC}
+                                onClick={this.handleSortTableByColumn}
+                                sortable={true}
+                            >
                                 {intl.formatMessage({ id: 'batch' })}
                             </HeadCell>
-                            <HeadCell data-column={'dosage'} onClick={this.handleSortTableByColumn}>
+                            <HeadCell
+                                data-column={'dosage'}
+                                activeSort={sortColumn.column === 'dosage'}
+                                order={sortColumn.column === 'dosage' ? sortColumn.direction : ASC}
+                                onClick={this.handleSortTableByColumn}
+                                sortable={true}
+                            >
                                 {intl.formatMessage({ id: 'dosage' })}
                             </HeadCell>
-                            <HeadCell data-column={'defect'} onClick={this.handleSortTableByColumn}>
+                            <HeadCell
+                                data-column={'defect'}
+                                activeSort={sortColumn.column === 'defect'}
+                                order={sortColumn.column === 'defect' ? sortColumn.direction : ASC}
+                                onClick={this.handleSortTableByColumn}
+                                sortable={true}
+                            >
                                 {intl.formatMessage({ id: 'defects' })}
                             </HeadCell>
-                            <HeadCell data-column={'timestamp'} onClick={this.handleSortTableByColumn}>
+                            <HeadCell
+                                data-column={'timestamp'}
+                                activeSort={sortColumn.column === 'timestamp'}
+                                order={sortColumn.column === 'timestamp' ? sortColumn.direction : ASC}
+                                onClick={this.handleSortTableByColumn}
+                                sortable={true}
+                            >
                                 {intl.formatMessage({ id: 'timestamp' })}
                             </HeadCell>
                             <HeadCell>&nbsp;</HeadCell>

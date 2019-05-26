@@ -29,15 +29,15 @@ export const prepareDataForTable = data => {
     return prepData;
 };
 
-export const sortDataByColumn = (data, column) => {
+export const sortDataByColumn = (data, column, sortDirection) => {
     const newData = data.sort((itemA, itemB) => {
         const val1 = itemA[column].toLowerCase();
         const val2 = itemB[column].toLowerCase();
         if (val1 > val2) {
-            return 1;
+            return sortDirection === 'asc' ? 1 : -1;
         }
         if (val1 < val2) {
-            return -1;
+            return sortDirection === 'asc' ? -1 : 1;
         }
         return 0;
     });

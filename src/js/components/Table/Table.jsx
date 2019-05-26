@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import propTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 export const BasicTable = styled.table`
     margin: 0;
@@ -71,26 +71,34 @@ const HeadCellOuter = styled.th`
     font-size: ${props => props.theme.table.headerFontSize};
     text-align: left;
     cursor: pointer;
+
+    ${props =>
+        props.activeSort &&
+        css`
+            svg {
+                color: ${props => props.theme.brandPrimaryColor};
+            }
+        `}
 `;
 
 export const StyledIcon = styled(FontAwesomeIcon)`
-    margin-left: 5px;
-    color: ${props => props.theme.brandPrimaryColor};
+    margin-left: ${props => props.theme.defaultMargin};
+    color: ${props => props.theme.table.inactiveTextColor};
     pointer-events: none;
 `;
 
-export const HeadCell = ({ children, order, ...rest }) => (
-    <HeadCellOuter {...rest} order={order}>
+export const HeadCell = ({ children, activeSort, sortable, order, ...rest }) => (
+    <HeadCellOuter {...rest} activeSort={activeSort}>
         {children}
-        <StyledIcon icon={faChevronDown} />
+        {sortable && <StyledIcon icon={order === 'asc' ? faChevronDown : faChevronUp} />}
     </HeadCellOuter>
 );
 
 HeadCell.propTypes = {
-    align: propTypes.oneOf(['left', 'center', 'right']),
+    activeSort: propTypes.bool,
     children: propTypes.node,
     order: propTypes.oneOf(['asc', 'desc', 'none']),
-    width: propTypes.number
+    sortable: propTypes.bool
 };
 
 export const Cell = styled.td`

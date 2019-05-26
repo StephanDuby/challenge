@@ -31,6 +31,7 @@ const AnimatedSegment = styled(PieSegment)`
 
 const CircleMask = styled.circle`
     pointer-events: none;
+    animation: ${blendIn} 0.3s ease-in-out;
 `;
 
 const ActiveSegmentButton = styled.circle`
