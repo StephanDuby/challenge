@@ -1,6 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
+import { defectShape } from '../../../routes/Statistics/Statistics';
 
 export const CHART_BASE = 320;
 export const CHART_PADDING = 30;
@@ -80,13 +81,6 @@ const ChartTextSpecial = styled(ChartTextSpan)`
     line-height: 30px;
     color: ${props => props.theme.brandSecondaryColor};
 `;
-
-export const defectShape = propTypes.shape({
-    defect: propTypes.string,
-    count: propTypes.number,
-    color: propTypes.string,
-    percentage: propTypes.number
-});
 
 const chartSegmentsShape = propTypes.shape({
     startChunks: propTypes.arrayOf(propTypes.string),

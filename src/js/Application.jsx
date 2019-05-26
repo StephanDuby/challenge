@@ -8,7 +8,7 @@ import { ROUTES } from './routes/routes';
 import { AppShell } from './AppShell';
 import { GlobalStyles } from './GlobalStyles';
 import { Tracker } from './routes/Tracker/Tracker';
-import { Statistics } from './routes/Statistics/Statistics';
+import { StatisticsPage } from './routes/Statistics/StatisticsPage';
 
 export default class Application extends React.Component {
 
@@ -22,7 +22,7 @@ export default class Application extends React.Component {
                             <Switch>
                                 <Redirect exact from={ROUTES.home} to={ROUTES.tracker} />
                                 <Route exact path={ROUTES.tracker} component={Tracker} />
-                                <Route exact path={ROUTES.stats} component={Statistics} />
+                                <Route exact path={ROUTES.stats} component={StatisticsPage} />
                             </Switch>
                         </AppShell>
                     </ThemeProvider>

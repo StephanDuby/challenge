@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { defectShape } from './PieChartSVG';
+import { defectShape } from '../../../routes/Statistics/Statistics';
 
 const LegendHeader = styled.div`
     margin-bottom: ${props => props.theme.defaultMargin};

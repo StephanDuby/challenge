@@ -10,9 +10,9 @@ import {
     CHART_PADDING,
     BAR_THICKNESS_ACTIVE,
     CHART_BASE,
-    MEASURE_UNIT,
-    defectShape
+    MEASURE_UNIT
 } from './PieChartSVG';
+import { defectShape } from '../../../routes/Statistics/Statistics';
 import { ChartLegend } from './ChartLegend';
 import {
     calulateSegmentPath,

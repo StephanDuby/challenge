@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { PageContainer, PageHeader, PageBody } from '../../components/PageLayout/PageLayout';
 import { Toggle } from '../../components/elements/Toggle/toggle';
@@ -6,8 +7,7 @@ import { Select } from '../../components/elements/Select/Select';
 import { PieChart } from '../../components/charts/PieChart/PieChart';
 import { StatisticsTable } from './StatisticsTable';
 import { device } from '../../helpers/viewportSizes';
-import { aggregateData, getFilterValuesFromData, prepareDataForTable } from '../../helpers/dataHelper';
-import { data } from '../../mock/pieChartData';
+import { PIE_VIEW } from './StatisticsPage';
 
 const StyledPageHeader = styled(PageHeader)`
     @media ${device.large} {
@@ -78,50 +78,48 @@ const FilterSelect = styled(Select)`
         }
     }
 `;
-// generate chart data from raw data
-const pieChartData = aggregateData(data.defects, 'defect');
-const filterData = getFilterValuesFromData(data.defects);
-const tableData = prepareDataForTable(data.defects);
 
-const PIE_VIEW = 'pie';
-const BAR_VIEW = 'bar';
+export const defectShape = propTypes.shape({
+    defect: propTypes.string,
+    count: propTypes.number,
+    color: propTypes.string,
+    percentage: propTypes.number
+});
 
-export class Statistics extends React.Component {
+export const Statistics = ({ filterData, pieChartData, tableData, toggleValue, onClickToggle }) => (
+    <PageContainer>
+        <StyledPageHeader>
+            <MachineStatus>
+                Machine <MachineStatusIndicator />
+                <MachineName>XB3421</MachineName>
+            </MachineStatus>
+            <FilterBar>
+                <FilterSelect options={filterData.monthFilterValues} />
+                <FilterSelect options={filterData.dosageFilterValues} />
+                <FilterSelect options={filterData.stampFilterValues} />
+                <FilterSelect options={filterData.batchFilterValues} />
+            </FilterBar>
+        </StyledPageHeader>
+        <PageBody>
+            <Headline>Defect Statistics</Headline>
+            <Toggle toggleValue={toggleValue === PIE_VIEW ? 0 : 1} onClickToggle={this.handleClickToggle} />
+            <PieChart pieChartData={pieChartData} />
+            <StatisticsTable tableData={tableData} />
+        </PageBody>
+    </PageContainer>
+);
 
-    state = {
-        toggleValue: PIE_VIEW
-    };
-
-    handleClickToggle = () => {
-        this.setState(state => ({
-            toggleValue: state.toggleValue === PIE_VIEW ? BAR_VIEW : PIE_VIEW
-        }));
-    };
-
-    render() {
-        const { toggleValue } = this.state;
-        return (
-            <PageContainer>
-                <StyledPageHeader>
-                    <MachineStatus>
-                        Machine <MachineStatusIndicator />
-                        <MachineName>XB3421</MachineName>
-                    </MachineStatus>
-                    <FilterBar>
-                        <FilterSelect options={filterData.monthFilterValues} />
-                        <FilterSelect options={filterData.dosageFilterValues} />
-                        <FilterSelect options={filterData.stampFilterValues} />
-                        <FilterSelect options={filterData.batchFilterValues} />
-                    </FilterBar>
-                </StyledPageHeader>
-                <PageBody>
-                    <Headline>Defect Statistics</Headline>
-                    <Toggle toggleValue={toggleValue === PIE_VIEW ? 0 : 1} onClickToggle={this.handleClickToggle} />
-                    <PieChart pieChartData={pieChartData} />
-                    <StatisticsTable tableData={tableData} />
-                </PageBody>
-            </PageContainer>
-        );
-    }
-
-}
+Statistics.propTypes = {
+    pieChartData: propTypes.shape({
+        aggregatedDefects: propTypes.arrayOf(defectShape)
+    }),
+    tableData: propTypes.array,
+    filterData: propTypes.shape({
+        monthFilterValues: propTypes.arrayOf(propTypes.string),
+        dosageFilterValues: propTypes.arrayOf(propTypes.string),
+        stampFilterValues: propTypes.arrayOf(propTypes.string),
+        batchFilterValues: propTypes.arrayOf(propTypes.string)
+    }),
+    toggleValue: propTypes.number,
+    onClickToggle: propTypes.func
+};
