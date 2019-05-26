@@ -26,12 +26,12 @@ const blendIn = keyframes`
 `;
 
 const AnimatedSegment = styled(PieSegment)`
-    animation: ${blendIn} 0.3s ease-in-out;
+    animation: ${blendIn} 0.2s ease-in-out;
 `;
 
 const CircleMask = styled.circle`
     pointer-events: none;
-    animation: ${blendIn} 0.3s ease-in-out;
+    animation: ${blendIn} 0.2s ease-in-out;
 `;
 
 const ActiveSegmentButton = styled.circle`
@@ -64,7 +64,7 @@ const ChartText = styled.div`
     right: 0;
     text-align: center;
     color: '#F00';
-    animation: ${slideUp} 0.3s ease-in-out;
+    animation: ${slideUp} 0.2s ease-out;
 `;
 
 const ChartTextSpan = styled.div`

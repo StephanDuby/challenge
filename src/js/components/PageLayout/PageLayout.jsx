@@ -4,6 +4,7 @@ export const PageContainer = styled.div`
     padding: ${props => props.theme.defaultPadding};
     position: relative;
     min-height: 100%;
+    max-width: 1400px;
 `;
 
 export const PageHeader = styled.div`

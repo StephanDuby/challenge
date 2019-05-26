@@ -18,10 +18,12 @@ const DefectList = styled.div`
 `;
 
 const DefectItem = styled.div`
-    flex: 1;
+    flex: 1 1 50%;
+    width: 50%;
     min-width: 230px;
     height: 35px;
     line-height: 35px;
+    cursor: pointer;
 
     ${props =>
         props.inactive
@@ -62,7 +64,7 @@ const ColorSwatch = styled.div`
             : null}
 `;
 
-export const ChartLegend = ({ pieChartData, activeDataIndex }) => (
+export const ChartLegend = ({ pieChartData, activeDataIndex, onClickItem }) => (
     <>
         <LegendHeader>
             <LegendHeaderNumber>
@@ -72,7 +74,12 @@ export const ChartLegend = ({ pieChartData, activeDataIndex }) => (
         </LegendHeader>
         <DefectList>
             {pieChartData.aggregatedDefects.map((item, index) => (
-                <DefectItem key={item.defect} inactive={activeDataIndex != null && activeDataIndex !== index}>
+                <DefectItem
+                    key={item.defect}
+                    inactive={activeDataIndex != null && activeDataIndex !== index}
+                    onClick={onClickItem}
+                    data-item={index}
+                >
                     <ColorSwatch color={item.color} inactive={activeDataIndex != null && activeDataIndex !== index} />
                     {item.defect}
                 </DefectItem>
@@ -83,5 +90,6 @@ export const ChartLegend = ({ pieChartData, activeDataIndex }) => (
 
 ChartLegend.propTypes = {
     pieChartData: propTypes.object,
-    activeDataIndex: propTypes.number
+    activeDataIndex: propTypes.number,
+    onClickItem: propTypes.func
 };

@@ -130,7 +130,11 @@ export class PieChart extends React.Component {
                     />
                 </GraphContainer>
                 <LegendContainer>
-                    <ChartLegend pieChartData={pieChartData} activeDataIndex={activeDataIndex} />
+                    <ChartLegend
+                        pieChartData={pieChartData}
+                        activeDataIndex={activeDataIndex}
+                        onClickItem={this.handleClickSegment}
+                    />
                 </LegendContainer>
             </ChartContainer>
         );
