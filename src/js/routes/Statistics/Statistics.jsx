@@ -7,7 +7,6 @@ import { Select } from '../../components/elements/Select/Select';
 import { PieChart } from '../../components/charts/PieChart/PieChart';
 import { StatisticsTable } from './StatisticsTable';
 import { device } from '../../helpers/viewportSizes';
-import { PIE_VIEW } from './StatisticsPage';
 
 const StyledPageHeader = styled(PageHeader)`
     @media ${device.large} {
@@ -102,7 +101,7 @@ export const Statistics = ({ filterData, pieChartData, tableData, toggleValue, o
         </StyledPageHeader>
         <PageBody>
             <Headline>Defect Statistics</Headline>
-            <Toggle toggleValue={toggleValue === PIE_VIEW ? 0 : 1} onClickToggle={this.handleClickToggle} />
+            <Toggle toggleValue={toggleValue} onClickToggle={onClickToggle} />
             <PieChart pieChartData={pieChartData} />
             <StatisticsTable tableData={tableData} />
         </PageBody>

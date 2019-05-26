@@ -50,7 +50,7 @@ export class PieChart extends React.Component {
 
     static propTypes = {
         pieChartData: propTypes.shape({
-            aggregatedDefects: propTypes.arrayOf(defectShape)
+            aggregatedDefects: propTypes.arrayOf(propTypes.shape(defectShape))
         })
     };
 

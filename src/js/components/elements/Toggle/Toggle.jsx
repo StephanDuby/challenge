@@ -65,14 +65,27 @@ const StyledIcon = styled(FontAwesomeIcon)`
             : null}
 `;
 
+const StyledIconContainer = styled.div`
+    ${props =>
+        props.inactive
+            ? css`
+                  color: ${props => props.theme.lightTextColor};
+              `
+            : null}
+`;
+
 export const Toggle = ({ toggleValue, onClickToggle }) => (
     <ToggleContainer onClick={onClickToggle}>
         <ToggleButton toggleValue={toggleValue} />
         <ToggleValue>
-            <StyledIcon icon={faChartPie} inactive={toggleValue !== 0} />
+            <StyledIconContainer inactive={toggleValue !== 0}>
+                <StyledIcon icon={faChartPie} />
+            </StyledIconContainer>
         </ToggleValue>
         <ToggleValue>
-            <StyledIcon icon={faChartBar} inactive={toggleValue !== 1} />
+            <StyledIconContainer inactive={toggleValue !== 1}>
+                <StyledIcon icon={faChartBar} />
+            </StyledIconContainer>
         </ToggleValue>
     </ToggleContainer>
 );

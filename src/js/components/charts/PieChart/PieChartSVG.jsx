@@ -175,7 +175,7 @@ export const PieChartSVG = ({
 };
 
 PieChartSVG.propTypes = {
-    activeData: defectShape,
+    activeData: propTypes.shape(defectShape),
     chartSegments: chartSegmentsShape,
     activeSegment: propTypes.objectOf(propTypes.string),
     activeSegmentButton: propTypes.shape({

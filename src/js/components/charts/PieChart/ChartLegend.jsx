@@ -99,7 +99,7 @@ export const ChartLegend = ({ pieChartData, activeDataIndex, onClickItem }) => (
 
 ChartLegend.propTypes = {
     pieChartData: propTypes.shape({
-        aggregatedDefects: propTypes.arrayOf(defectShape)
+        aggregatedDefects: propTypes.arrayOf(propTypes.shape(defectShape))
     }),
     activeDataIndex: propTypes.number,
     onClickItem: propTypes.func

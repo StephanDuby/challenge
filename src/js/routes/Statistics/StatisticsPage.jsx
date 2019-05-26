@@ -30,7 +30,7 @@ export class StatisticsPage extends React.Component {
                 pieChartData={pieChartData}
                 tableData={tableData}
                 filterData={filterData}
-                toggleValue={toggleValue}
+                toggleValue={toggleValue === PIE_VIEW ? 0 : 1}
                 onClickToggle={this.handleClickToggle}
             />
         );
