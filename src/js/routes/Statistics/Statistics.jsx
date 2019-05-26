@@ -76,44 +76,29 @@ const FilterSelect = styled(Select)`
         }
     }
 `;
+// generate chart data from raw data
+const pieChartData = aggregateData(data.defects, 'defect');
+const filterData = getFilterValuesFromData(data.defects);
+const tableData = prepareDataForTable(data.defects);
 
-export class Statistics extends React.PureComponent {
-
-    handleSortClick = sortColumn => {
-        this.setState(
-            {
-                sortColumn
-            },
-            this.callLeistungService
-        );
-    };
-
-    render() {
-        // generate chart data from raw data
-        const pieChartData = aggregateData(data.defects, 'defect');
-        const filterData = getFilterValuesFromData(data.defects);
-        const tableData = prepareDataForTable(data.defects);
-        return (
-            <PageContainer>
-                <StyledPageHeader>
-                    <MachineStatus>
-                        Machine <MachineStatusIndicator />
-                        <MachineName>XB3421</MachineName>
-                    </MachineStatus>
-                    <FilterBar>
-                        <FilterSelect options={filterData.monthFilterValues} />
-                        <FilterSelect options={filterData.dosageFilterValues} />
-                        <FilterSelect options={filterData.stampFilterValues} />
-                        <FilterSelect options={filterData.batchFilterValues} />
-                    </FilterBar>
-                </StyledPageHeader>
-                <PageBody>
-                    <Headline>Defect Statistics</Headline>
-                    <PieChart pieChartData={pieChartData} />
-                    <StatisticsTable tableData={tableData} />
-                </PageBody>
-            </PageContainer>
-        );
-    }
-
-}
+export const Statistics = () => (
+    <PageContainer>
+        <StyledPageHeader>
+            <MachineStatus>
+                Machine <MachineStatusIndicator />
+                <MachineName>XB3421</MachineName>
+            </MachineStatus>
+            <FilterBar>
+                <FilterSelect options={filterData.monthFilterValues} />
+                <FilterSelect options={filterData.dosageFilterValues} />
+                <FilterSelect options={filterData.stampFilterValues} />
+                <FilterSelect options={filterData.batchFilterValues} />
+            </FilterBar>
+        </StyledPageHeader>
+        <PageBody>
+            <Headline>Defect Statistics</Headline>
+            <PieChart pieChartData={pieChartData} />
+            <StatisticsTable tableData={tableData} />
+        </PageBody>
+    </PageContainer>
+);

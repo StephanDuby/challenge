@@ -1,6 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { defectShape } from './PieChartSVG';
 
 const LegendHeader = styled.div`
     margin-bottom: ${props => props.theme.defaultMargin};
@@ -33,6 +34,10 @@ const DefectItem = styled.div`
             : null}
 `;
 
+DefectItem.propTypes = {
+    inactive: propTypes.bool
+};
+
 const ColorSwatch = styled.div`
     display: inline-block;
     width: 15px;
@@ -64,6 +69,10 @@ const ColorSwatch = styled.div`
             : null}
 `;
 
+ColorSwatch.propTypes = {
+    inactive: propTypes.bool
+};
+
 export const ChartLegend = ({ pieChartData, activeDataIndex, onClickItem }) => (
     <>
         <LegendHeader>
@@ -89,7 +98,9 @@ export const ChartLegend = ({ pieChartData, activeDataIndex, onClickItem }) => (
 );
 
 ChartLegend.propTypes = {
-    pieChartData: propTypes.object,
+    pieChartData: propTypes.shape({
+        aggregatedDefects: propTypes.arrayOf(defectShape)
+    }),
     activeDataIndex: propTypes.number,
     onClickItem: propTypes.func
 };

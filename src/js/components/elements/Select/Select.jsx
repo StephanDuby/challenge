@@ -56,5 +56,5 @@ export const Select = ({ options, ...props }) => (
 );
 
 Select.propTypes = {
-    options: propTypes.array
+    options: propTypes.arrayOf(propTypes.string)
 };

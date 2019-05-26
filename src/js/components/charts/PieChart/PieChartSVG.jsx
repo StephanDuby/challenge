@@ -81,6 +81,20 @@ const ChartTextSpecial = styled(ChartTextSpan)`
     color: ${props => props.theme.brandSecondaryColor};
 `;
 
+export const defectShape = propTypes.shape({
+    defect: propTypes.string,
+    count: propTypes.number,
+    color: propTypes.string,
+    percentage: propTypes.number
+});
+
+const chartSegmentsShape = propTypes.shape({
+    startChunks: propTypes.arrayOf(propTypes.string),
+    endChunks: propTypes.arrayOf(propTypes.string),
+    paths: propTypes.arrayOf(propTypes.string),
+    colors: propTypes.arrayOf(propTypes.string)
+});
+
 export const PieChartSVG = ({
     chartSegments,
     activeData,
@@ -167,10 +181,12 @@ export const PieChartSVG = ({
 };
 
 PieChartSVG.propTypes = {
-    activeData: propTypes.object,
-    chartSegments: propTypes.object,
-    activeSegment: propTypes.object,
-    activeSegmentButton: propTypes.object,
+    activeData: defectShape,
+    chartSegments: chartSegmentsShape,
+    activeSegment: propTypes.objectOf(propTypes.string),
+    activeSegmentButton: propTypes.shape({
+        position: propTypes.objectOf(propTypes.number)
+    }),
     onClickSegment: propTypes.func,
     onCloseActiveSegment: propTypes.func
 };

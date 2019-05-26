@@ -10,7 +10,8 @@ import {
     CHART_PADDING,
     BAR_THICKNESS_ACTIVE,
     CHART_BASE,
-    MEASURE_UNIT
+    MEASURE_UNIT,
+    defectShape
 } from './PieChartSVG';
 import { ChartLegend } from './ChartLegend';
 import {
@@ -46,6 +47,12 @@ const LegendContainer = styled.div`
 `;
 
 export class PieChart extends React.Component {
+
+    static propTypes = {
+        pieChartData: propTypes.shape({
+            aggregatedDefects: propTypes.arrayOf(defectShape)
+        })
+    };
 
     state = {
         activeDataIndex: null
@@ -120,7 +127,6 @@ export class PieChart extends React.Component {
             <ChartContainer>
                 <GraphContainer>
                     <PieChartSVG
-                        pieChartData={pieChartData}
                         chartSegments={chartSegments}
                         activeData={activeData}
                         activeSegment={activeSegment}
@@ -141,7 +147,3 @@ export class PieChart extends React.Component {
     }
 
 }
-
-PieChart.propTypes = {
-    pieChartData: propTypes.object
-};
