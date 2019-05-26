@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme/theme';
-import { messages } from './i18n/de';
+import { messages } from './i18n/en';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import { ROUTES } from './routes/routes';
@@ -14,7 +14,7 @@ export default class Application extends React.Component {
 
     render() {
         return (
-            <IntlProvider locale={'de'} messages={messages}>
+            <IntlProvider locale={'en'} messages={messages}>
                 <BrowserRouter>
                     <ThemeProvider theme={theme}>
                         <AppShell>

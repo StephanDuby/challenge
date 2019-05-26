@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { PageContainer, PageHeader, PageBody } from '../../components/PageLayout/PageLayout';
 import { Select } from '../../components/elements/Select/Select';
 import { PieChart } from '../../components/charts/PieChart/PieChart';
+import { StatisticsTable } from './StatisticsTable';
 import { device } from '../../helpers/viewportSizes';
-import { aggregateData } from '../../helpers/dataHelper';
-import { data, optionsFilterA, optionsFilterB, optionsFilterC, optionsFilterD } from '../../mock/pieChartData';
+import { aggregateData, getFilterValuesFromData, prepareDataForTable } from '../../helpers/dataHelper';
+import { data } from '../../mock/pieChartData';
 
 const StyledPageHeader = styled(PageHeader)`
     display: flex;
@@ -61,11 +62,22 @@ const FilterSelect = styled(Select)`
     }
 `;
 
-export class Statistics extends React.Component {
+export class Statistics extends React.PureComponent {
+
+    handleSortClick = sortColumn => {
+        this.setState(
+            {
+                sortColumn
+            },
+            this.callLeistungService
+        );
+    };
 
     render() {
         // generate chart data from raw data
         const pieChartData = aggregateData(data.defects, 'defect');
+        const filterData = getFilterValuesFromData(data.defects);
+        const tableData = prepareDataForTable(data.defects);
         return (
             <PageContainer>
                 <StyledPageHeader>
@@ -74,16 +86,16 @@ export class Statistics extends React.Component {
                         <MachineName>XB3421</MachineName>
                     </MachineStatus>
                     <FilterBar>
-                        <FilterSelect options={optionsFilterA} />
-                        <FilterSelect options={optionsFilterB} />
-                        <FilterSelect options={optionsFilterC} />
-                        <FilterSelect options={optionsFilterD} />
+                        <FilterSelect options={filterData.monthFilterValues} />
+                        <FilterSelect options={filterData.dosageFilterValues} />
+                        <FilterSelect options={filterData.stampFilterValues} />
+                        <FilterSelect options={filterData.batchFilterValues} />
                     </FilterBar>
                 </StyledPageHeader>
                 <PageBody>
                     <Headline>Defect Statistics</Headline>
                     <PieChart pieChartData={pieChartData} />
-                    <div>TODO: table</div>
+                    <StatisticsTable tableData={tableData} />
                 </PageBody>
             </PageContainer>
         );

@@ -1,4 +1,9 @@
+import uuid from 'uuid';
 import { theme } from '../theme/theme';
+
+const getDistinctValues = (data, property) => {
+    return [...new Set(data.map(x => x[property]))];
+};
 
 export const aggregateData = (data, property) => {
     const total = data.length;
@@ -16,8 +21,43 @@ export const aggregateData = (data, property) => {
     return { total, aggregatedDefects };
 };
 
-const getDistinctValues = (data, property) => {
-    return [...new Set(data.map(x => x[property]))];
+export const prepareDataForTable = data => {
+    const prepData = data.map(item => {
+        item.uuid = uuid();
+        return item;
+    });
+    return prepData;
+};
+
+export const sortDataByColumn = (data, column) => {
+    const newData = data.sort((itemA, itemB) => {
+        const val1 = itemA[column].toLowerCase();
+        const val2 = itemB[column].toLowerCase();
+        if (val1 > val2) {
+            return 1;
+        }
+        if (val1 < val2) {
+            return -1;
+        }
+        return 0;
+    });
+    return newData;
+};
+
+export const getFilterValuesFromData = data => {
+    const batchFilterValues = ['All batches'].concat(getDistinctValues(data, 'batch'));
+    const dosageFilterValues = ['All dosages'].concat(getDistinctValues(data, 'dosage'));
+    const stampFilterValues = ['All stamps'].concat(
+        getDistinctValues(data, 'top-stamp').concat(getDistinctValues(data, 'bottom-stamp'))
+    );
+    const monthFilterValues = ['Current Month', 'Another month'];
+
+    return {
+        batchFilterValues,
+        dosageFilterValues,
+        stampFilterValues,
+        monthFilterValues
+    };
 };
 
 export const calulateSegmentPath = parameters => {
