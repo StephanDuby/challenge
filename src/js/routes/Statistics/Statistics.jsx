@@ -9,9 +9,11 @@ import { aggregateData, getFilterValuesFromData, prepareDataForTable } from '../
 import { data } from '../../mock/pieChartData';
 
 const StyledPageHeader = styled(PageHeader)`
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    @media ${device.large} {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
 `;
 
 const Headline = styled.h1`
@@ -53,11 +55,24 @@ const FilterSelect = styled(Select)`
     margin-bottom: ${props => props.theme.defaultMargin};
 
     @media ${device.medium} {
+        width: 45%;
+        margin-left: 5%;
+
+        &:nth-child(odd) {
+            margin-left: 0;
+        }
+    }
+
+    @media ${device.large} {
         width: auto;
         margin-left: ${props => props.theme.defaultMargin};
 
+        &:nth-child(odd) {
+            margin-left: ${props => props.theme.defaultMargin};
+        }
+
         &:first-child {
-            margin-left: none;
+            margin-left: 0;
         }
     }
 `;

@@ -19,7 +19,7 @@ const DefectList = styled.div`
 
 const DefectItem = styled.div`
     flex: 1;
-    min-width: 320px;
+    min-width: 230px;
     height: 35px;
     line-height: 35px;
 

@@ -1,7 +1,7 @@
 const viewportSizes = {
-    small: '450px',
-    medium: '1024px',
-    large: '1600px'
+    small: '320px',
+    medium: '768px',
+    large: '1280px'
 };
 
 export const device = {

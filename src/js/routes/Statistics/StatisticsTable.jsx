@@ -40,6 +40,7 @@ const StyledIconContainer = styled.div`
 
 const StyledIconNoClick = styled(StyledIcon)`
     pointer-events: none;
+    color: ${props => props.theme.brandPrimaryColor};
 `;
 
 class StatisticsTableBase extends React.Component {
