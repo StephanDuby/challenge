@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,19 +10,7 @@ export const BasicTable = styled.table`
     border-collapse: collapse;
     cursor: default;
     min-width: 100%;
-
-    ${props =>
-        props.width
-            ? css`
-                  max-width: ${props => props.width};
-              `
-            : null}
 `;
-
-BasicTable.propTypes = {
-    className: propTypes.string,
-    width: propTypes.string
-};
 
 export const TableHead = styled.thead`
     background-color: ${props => props.theme.table.headerBgColor};
@@ -35,31 +23,7 @@ TableBody.propTypes = {
     children: propTypes.node
 };
 
-class TableRowComponent extends PureComponent {
-
-    static propTypes = {
-        className: propTypes.string,
-        children: propTypes.any,
-        onClick: propTypes.func,
-        row: propTypes.object
-    };
-
-    handleClickTableRow = () => {
-        const { onClick } = this.props;
-        onClick && onClick(this.props.row);
-    };
-
-    render() {
-        return (
-            <tr className={this.props.className} onClick={this.handleClickTableRow}>
-                {this.props.children}
-            </tr>
-        );
-    }
-
-}
-
-export const TableRow = styled(TableRowComponent)`
+export const TableRow = styled.tr`
     margin: 0;
 `;
 
@@ -97,52 +61,16 @@ export const HeadCell = ({ children, activeSort, sortable, order, ...rest }) => 
 HeadCell.propTypes = {
     activeSort: propTypes.bool,
     children: propTypes.node,
-    order: propTypes.oneOf(['asc', 'desc', 'none']),
+    order: propTypes.oneOf(['asc', 'desc']),
     sortable: propTypes.bool
 };
 
 export const Cell = styled.td`
-  padding: 0 13px;
-  height: 54px;
-  margin: 0;
-  font-family: ${props => props.theme.defaultFont};
-  font-size: ${props => props.theme.table.cellFontSize};
-  vertical-align: ${props => props.vAlign || 'middle'};
-  white-space: nowrap;
-
-  ${props =>
-        props.width
-            ? css`
-                max-width: ${props => props.width};
-            `
-            : null}
-  ${props =>
-        props.align
-            ? css`
-                text-align: ${props.align};
-            `
-            : null}
-  
-  ${props =>
-        props.noWrap
-            ? css`
-                white-space: nowrap;
-            `
-            : null}
-  
-  ${props =>
-        props.ellipsis
-            ? css`
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            `
-            : null}
+    padding: 0 13px;
+    height: 54px;
+    margin: 0;
+    font-family: ${props => props.theme.defaultFont};
+    font-size: ${props => props.theme.table.cellFontSize};
+    vertical-align: 'middle';
+    white-space: nowrap;
 `;
-
-Cell.propTypes = {
-    align: propTypes.oneOf(['left', 'center', 'right']),
-    vAlign: propTypes.oneOf(['top', 'middle', 'bottom']),
-    noWrap: propTypes.bool,
-    width: propTypes.string
-};
